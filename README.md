@@ -1,8 +1,8 @@
 # AE Downgrader Engine
 
 [![Build Status](https://github.com/chelohubinc/ae-downgrader-engine/actions/workflows/ci.yml/badge.svg)](https://github.com/chelohubinc/ae-downgrader-engine/actions/workflows/ci.yml)
-[![npm version](https://img.shields.io/npm/v/ae-downgrader-engine.svg)](https://www.npmjs.com/package/ae-downgrader-engine)
-[![License](https://img.shields.io/npm/l/ae-downgrader-engine.svg)](https://www.npmjs.com/package/ae-downgrader-engine)
+[![npm version](https://img.shields.io/npm/v/@chelohubinc/ae-downgrader-engine.svg)](https://www.npmjs.com/package/@chelohubinc/ae-downgrader-engine)
+[![License](https://img.shields.io/npm/l/@chelohubinc/ae-downgrader-engine.svg)](https://www.npmjs.com/package/@chelohubinc/ae-downgrader-engine)
 
 A standalone JavaScript and TypeScript library for inspecting Adobe After Effects
 project files (`.aep`) and testing a limited set of conversions to earlier releases.
