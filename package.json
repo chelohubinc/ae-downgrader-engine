@@ -1,5 +1,5 @@
 {
-    "name": "ae-downgrader-engine",
+    "name": "@cheloappdev225/ae-downgrader-engine",
     "version": "0.1.1",
     "description": "Independent engine (browser/Node) for .aep file detection and backward compatibility",
     "author": "Chelohub Inc. <npm@borislukrece.com>",
@@ -31,7 +31,7 @@
         "vitest": "^2.1.0"
     },
     "files": [
-        "dist"
+        "dist", "README.md", "LICENCE"
     ],
     "repository": {
         "type": "git",
@@ -46,6 +46,7 @@
         "node"
     ],
     "license": "ISC",
+    "publishConfig": { "access": "public" },
     "sideEffects": false,
     "engines": {
         "node": ">=18"
