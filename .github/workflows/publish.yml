@@ -18,6 +18,9 @@ jobs:
           node-version: 22
           registry-url: https://registry.npmjs.org/
 
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         run: npm install
 
@@ -27,10 +30,22 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Smoke test the CLI
+        run: |
+          node dist/cli.cjs --version
+          node dist/cli.cjs --matrix
+
+      - name: Check the library bundles contain no Node-only imports
+        run: |
+          if grep -E "node:|require\(.(fs|path|os).\)" dist/index.mjs dist/index.cjs; then
+            echo "Node-only import found in the library entry"
+            exit 1
+          fi
+
       - name: Run tests
         run: npm test
 
-      - name: Publish to npm
-        run: npm publish --access public
+      - name: Stage the package on npm
+        run: npm stage publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

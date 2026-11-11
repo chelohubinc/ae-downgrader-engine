@@ -7,6 +7,25 @@ and the format is inspired by [Keep a Changelog](https://keepachangelog.com/).
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- `ae-downgrader` command-line tool: analyze a project, list its available targets, convert it with `--to <year>`, print the compatibility matrix, and output JSON with `--json`. It never overwrites the input or an existing output unless `--overwrite` is given.
+- GitHub issue form to report conversion results, so the compatibility matrix can grow from real tests.
+- Tests for the command line and a guard test that keeps Node-only imports out of the library entry.
+- CI and publish workflows now smoke-test the built command and check that the library bundles contain no Node-only imports.
+
+### Fixed
+
+- README installation and import examples now use the scoped package name `@chelohubinc/ae-downgrader-engine`.
+
+### Notes
+
+- The library API, the compatibility matrix, and the `dist/index.*` bundles are unchanged.
+
+---
+
 ## [0.1.0] - 2026-11-09
 
 First public release of the standalone After Effects project engine.

@@ -20,20 +20,23 @@ locally; this library does not upload project data.
 - [Requirements](#requirements)
 - [Quick start](#quick-start)
 - [Browser usage](#browser-usage)
+- [Command line](#command-line)
 - [API](#api)
 - [Conversion availability](#conversion-availability)
 - [Errors](#errors)
 - [Limitations](#limitations)
+- [Contributing test results](#contributing-test-results)
 - [Development](#development)
 - [License](#license)
 
 ## Installation
 
 ```bash
-npm install ae-downgrader-engine
+npm install @chelohubinc/ae-downgrader-engine
 ```
 
-The package provides CommonJS, ES module, and TypeScript declaration builds.
+The package provides CommonJS, ES module, and TypeScript declaration builds, plus an
+`ae-downgrader` command (see [Command line](#command-line)).
 
 ## Requirements
 
@@ -52,7 +55,7 @@ import {
   convert,
   ConverterError,
   downloadName,
-} from 'ae-downgrader-engine';
+} from '@chelohubinc/ae-downgrader-engine';
 import { readFile, writeFile } from 'node:fs/promises';
 
 const input = new Uint8Array(await readFile('project.aep'));
@@ -98,7 +101,7 @@ import {
   availableTargets,
   convert,
   downloadName,
-} from 'ae-downgrader-engine';
+} from '@chelohubinc/ae-downgrader-engine';
 
 async function convertFile(file: File, target: 2023 | 2024 | 2025): Promise<void> {
   const input = new Uint8Array(await file.arrayBuffer());
@@ -130,6 +133,37 @@ async function convertFile(file: File, target: 2023 | 2024 | 2025): Promise<void
 For large files or UI responsiveness, call the library from a Web Worker and
 transfer the input `ArrayBuffer` to the worker. The library itself does not
 create workers or manage downloads.
+
+## Command line
+
+The package installs an `ae-downgrader` command. Run it without installing anything:
+
+```bash
+# Detect the version and list the available targets
+npx @chelohubinc/ae-downgrader-engine project.aep
+
+# Write a converted copy next to the input: project_AE2024.aep
+npx @chelohubinc/ae-downgrader-engine project.aep --to 2024
+```
+
+Or install it globally with `npm install -g @chelohubinc/ae-downgrader-engine` and run
+`ae-downgrader project.aep --to 2024`. It requires Node.js 18 or newer.
+
+| Option | Description |
+| --- | --- |
+| `--to <year>` | Target release (`2024` or `AE2024`). Without it, the file is only analyzed. |
+| `--out <path>` | Output file. Default: `<name>_AE<year>.aep` next to the input. |
+| `--overwrite` | Replace the output file if it already exists. |
+| `--json` | Print machine-readable JSON (analysis, report, or error). |
+| `--matrix` | Print the compatibility matrix. |
+| `-h`, `--help` / `-v`, `--version` | Show help or the version. |
+
+The original file is never modified or overwritten, and a pair that is not in the
+compatibility matrix is refused. Exit codes: `0` success, `1` the file or the conversion
+was rejected, `2` usage or file-system problem (for example an existing output file).
+
+The command is a thin wrapper around the library and is not part of the library entry
+point, so browser and bundler builds are not affected by it.
 
 ## API
 
@@ -298,6 +332,22 @@ try {
 - Always keep the original file and test the converted project in the target
   After Effects release before relying on it.
 
+## Contributing test results
+
+The compatibility matrix only grows with real tests, and every available conversion is still
+experimental. If you converted a project, please tell us what happened in After Effects:
+
+**[Report a conversion result](https://github.com/chelohubinc/ae-downgrader-engine/issues/new?template=conversion-report.yml)**
+
+A useful report says which versions were involved, how you converted the file, whether it
+opened, what was missing or different, and which features the project uses (expressions,
+text, shapes, 3D, track mattes, third-party plugins...).
+
+- **Privacy:** do not attach client or confidential projects. Attach a file only if you own
+  it and are happy to make it public; small sample projects are very welcome.
+- **How reports are used:** a pair moves from *experimental* to *supported* only after tests
+  cover a representative range of project features, not after a single success.
+
 ## Development
 
 ```bash
@@ -310,7 +360,8 @@ npm run build
 - `npm test` runs the Vitest suite.
 - `npm run typecheck` checks the TypeScript sources.
 - `npm run build` creates minified CommonJS and ES module bundles, source maps,
-  and TypeScript declarations in `dist/`.
+  and TypeScript declarations in `dist/`, then builds the command-line entry
+  (`dist/cli.cjs`).
 
 ## License
 

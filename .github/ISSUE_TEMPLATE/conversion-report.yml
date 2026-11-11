@@ -1,0 +1,82 @@
+name: Conversion report
+description: Tell us whether a converted project opened correctly in After Effects.
+title: "[Report] AE <source> -> <target>: "
+labels: ["conversion-report"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for helping to grow the compatibility matrix. Real results are the only way a conversion can move from *experimental* to *supported*.
+
+        **Do not attach client or confidential projects.** Attach a file only if you own it and are happy to make it public. Otherwise, describe what it contains.
+  - type: dropdown
+    id: source
+    attributes:
+      label: Source version (the project was saved in)
+      options: ["After Effects 2026", "After Effects 2025", "After Effects 2024", "After Effects 2023", "After Effects 2022"]
+    validations:
+      required: true
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target version (where you opened the converted file)
+      options: ["After Effects 2025", "After Effects 2024", "After Effects 2023", "After Effects 2022"]
+    validations:
+      required: true
+  - type: dropdown
+    id: tool
+    attributes:
+      label: How did you convert it?
+      options: ["Command line (ae-downgrader)", "Library (npm package)", "Website"]
+    validations:
+      required: true
+  - type: input
+    id: engine_version
+    attributes:
+      label: Engine version
+      description: Output of `ae-downgrader --version`, or the version in your package.json. Leave empty if you used the website.
+      placeholder: "0.1.2"
+  - type: dropdown
+    id: result
+    attributes:
+      label: Result in the target version
+      options:
+        - Opened normally, nothing missing
+        - Opened, but something is missing or different
+        - After Effects showed a warning or error dialog
+        - After Effects crashed or refused to open the file
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: What happened?
+      description: Copy the exact text of any dialog. Say what was missing or different (effects, expressions, layers, footage, render queue...).
+    validations:
+      required: true
+  - type: checkboxes
+    id: features
+    attributes:
+      label: Features used in the project
+      options:
+        - label: Expressions
+        - label: Text layers
+        - label: Shape layers
+        - label: 3D layers or cameras
+        - label: Masks
+        - label: Track mattes
+        - label: Pre-compositions
+        - label: Imported footage
+        - label: Third-party plugins
+  - type: input
+    id: builds
+    attributes:
+      label: Exact After Effects builds (optional)
+      placeholder: "26.0.1 -> 24.6.2"
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: Confirmation
+      options:
+        - label: I opened the converted file in the target version of After Effects.
+          required: true
