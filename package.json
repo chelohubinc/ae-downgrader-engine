@@ -4,7 +4,7 @@
     "description": "Independent engine (browser/Node) for .aep file detection and backward compatibility",
     "author": "Chelohub Inc. <npm@borislukrece.com>",
     "scripts": {
-        "build": "tsup",
+        "build": "tsup && tsup --config tsup.cli.config.ts",
         "dev": "tsup --watch",
         "typecheck": "tsc --noEmit",
         "release:patch": "npm version patch && git push origin HEAD --follow-tags",
@@ -14,6 +14,9 @@
     },
     "directories": {
         "test": "tests"
+    },
+    "bin": {
+        "ae-downgrader": "./dist/cli.cjs"
     },
     "main": "./dist/index.cjs",
     "module": "./dist/index.mjs",
@@ -43,7 +46,8 @@
         "downgrade",
         "engine",
         "browser",
-        "node"
+        "node",
+        "cli"
     ],
     "license": "ISC",
     "publishConfig": { "access": "public" },

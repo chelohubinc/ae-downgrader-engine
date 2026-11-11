@@ -27,6 +27,18 @@ jobs:
       - name: Build package
         run: npm run build
 
+      - name: Smoke test the CLI
+        run: |
+          node dist/cli.cjs --version
+          node dist/cli.cjs --matrix
+
+      - name: Check the library bundles contain no Node-only imports
+        run: |
+          if grep -E "node:|require\(.(fs|path|os).\)" dist/index.mjs dist/index.cjs; then
+            echo "Node-only import found in the library entry"
+            exit 1
+          fi
+
       - name: Run tests
         run: npm test
 
