@@ -1,6 +1,6 @@
 {
     "name": "@chelohubinc/ae-downgrader-engine",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Independent engine (browser/Node) for .aep file detection and backward compatibility",
     "author": "Chelohub Inc. <npm@borislukrece.com>",
     "scripts": {
